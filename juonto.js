@@ -110,7 +110,7 @@ const generateDialogue = async () => {
       max_tokens: 600,
       messages: [{
         role: 'user',
-        content: `Olet kirjoittamassa noin 75 sekunnin radiomonologin suomalaiselle naispuoliselle juontajalle Lauralle. Hän juontaa Toneko Radio -kesäradiota yksin.
+        content: `Olet kirjoittamassa noin 45 sekunnin radiomonologin suomalaiselle naispuoliselle juontajalle Lauralle. Hän juontaa Toneko Radio -kesäradiota yksin.
 
 Tämänhetkinen aika (KOPIOI TÄMÄ TÄSMÄLLEEN, älä muuta yhtään sanaa): ${now}
 Sää — Helsinki: ${weather.helsinki}, Tampere: ${weather.tampere}
