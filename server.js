@@ -8,7 +8,7 @@ http.createServer((req, res) => {
   if (req.url === '/juonto.mp3') {
     if (!fs.existsSync(FILE)) {
       res.writeHead(404)
-      return res.end('Ei vielä saatavilla — ' + FILE)
+      return res.end('Ei vielä saatavilla')
     }
     const stat = fs.statSync(FILE)
     res.writeHead(200, {
@@ -17,9 +17,11 @@ http.createServer((req, res) => {
     })
     fs.createReadStream(FILE).pipe(res)
   } else {
+    const exists = fs.existsSync(FILE)
+    const size = exists ? fs.statSync(FILE).size : 0
     res.writeHead(200, { 'Content-Type': 'text/plain' })
-    res.end('Toneko Radio OK — tiedosto: ' + (fs.existsSync(FILE) ? stat = fs.statSync(FILE), stat.size + ' tavua' : 'ei löydy'))
+    res.end('Toneko Radio OK — tiedosto: ' + (exists ? size + ' tavua' : 'ei loydy'))
   }
 }).listen(PORT, () => {
-  console.log(`Server käynnissä portissa ${PORT}`)
+  console.log('Server kaynnissa portissa ' + PORT)
 })
