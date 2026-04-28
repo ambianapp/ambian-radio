@@ -79,7 +79,7 @@ const generateDialogue = async () => {
   const hourText = hours[hourNum] || String(hourNum)
   const minText = minNum === 0 ? 'tasan' : mins[minNum] || String(minNum)
   const minPart = minNum === 0 ? 'tasan' : mins[minNum] || String(minNum)
-  const now = `kello ${hourText} ${minPart}, ${weekday}na ${dayText} ${monthName}`
+  const now = `${weekday}na ${dayText} ${monthName}`
 
   console.log('Haetaan sää...')
   const weather = await getWeather()
@@ -112,13 +112,13 @@ const generateDialogue = async () => {
         role: 'user',
         content: `Olet kirjoittamassa noin 45 sekunnin radiomonologin suomalaiselle naispuoliselle juontajalle Lauralle. Hän juontaa Toneko Radio -kesäradiota yksin.
 
-Tämänhetkinen aika (KOPIOI TÄMÄ TÄSMÄLLEEN, älä muuta yhtään sanaa): ${now}
+Tänään on: ${now}
 Sää — Helsinki: ${weather.helsinki}, Tampere: ${weather.tampere}
 Uutiset (valitse yksi ja avaa se kuulijoille):
 ${news.map((n, i) => `${i + 1}. ${n.title}${n.description ? ' — ' + n.description : ''}`).join('\n')}
 
 Säännöt:
-- Aloita kertomalla kellonaika ja päivämäärä — käytä TÄSMÄLLEEN yllä annettua aikaa, sana sanalta, älä muuta muotoa
+- Aloita mainitsemalla päivämäärä luontevasti
 - Kanavan nimi on Toneko Radio — ei taivutuksia, aina vain "Toneko Radio"
 - Kellonaika ja päivämäärä on jo valmiiksi oikein sanoin — KOPIOI ne sellaisenaan
 - Muissa luvuissa kuten vuosiluvuissa: 2024 = "kaksituhattakaksikymmentäneljä"
