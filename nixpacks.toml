@@ -1,2 +1,8 @@
 [phases.setup]
-nixPkgs = ["ffmpeg", "nodejs"]
+nixPkgs = ["ffmpeg", "nodejs_22"]
+
+[phases.build]
+cmds = ["npm install"]
+
+[start]
+cmd = "node scheduler.js"
