@@ -39,8 +39,9 @@ const getNews = async () => {
   const items = []
 
   const feeds = [
-    'https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-147&limit=10',
-    'https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-134&limit=10'
+    'https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-147',
+    'https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-134',
+    'https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET'
   ]
 
   for (const url of feeds) {
@@ -132,7 +133,7 @@ Säännöt:
 - Kanavan nimi on Toneko Radio — ei taivutuksia, aina vain "Toneko Radio"
 - Kellonaika ja päivämäärä on jo valmiiksi oikein sanoin — KOPIOI ne sellaisenaan
 - Muissa luvuissa kuten vuosiluvuissa: 2024 = "kaksituhattakaksikymmentäneljä"
-- Avaa valittu uutinen kunnolla — selitä mistä on kyse, anna kontekstia
+- Mainitse uutinen lyhyesti 1-2 lauseella, älä avaa sitä liikaa
 - Luonnollinen, lämmin ja innostunut tyyli
 - Laura puhuu yksin, ei toista henkilöä
 - 5-7 erillistä lausumaa
