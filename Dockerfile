@@ -7,4 +7,4 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 
-CMD ["node", "scheduler.js"]
+CMD ["node", "index.js"]
