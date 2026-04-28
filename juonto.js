@@ -133,7 +133,8 @@ Säännöt:
 - Kanavan nimi on Toneko Radio — ei taivutuksia, aina vain "Toneko Radio"
 - Kellonaika ja päivämäärä on jo valmiiksi oikein sanoin — KOPIOI ne sellaisenaan
 - Muissa luvuissa kuten vuosiluvuissa: 2024 = "kaksituhattakaksikymmentäneljä"
-- Mainitse uutinen lyhyesti 1-2 lauseella, älä avaa sitä liikaa
+- Mainitse uutinen YHDELLÄ lauseella maksimissaan — ei enempää
+- ÄLÄ jatka uutisesta enemmän kuin yhden lauseen verran
 - Luonnollinen, lämmin ja innostunut tyyli
 - Laura puhuu yksin, ei toista henkilöä
 - 5-7 erillistä lausumaa
