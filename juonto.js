@@ -23,12 +23,20 @@ const saveUsedNews = (titles) => {
 
 const getWeather = async () => {
   const fetchCity = async (lat, lon) => {
-    const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode&timezone=Europe/Helsinki`)
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe/Helsinki&forecast_days=2`)
     const d = await r.json()
-    if (!d.current) return 'ei saatavilla'
+    if (!d.current) return { today: 'ei saatavilla', tomorrow: 'ei saatavilla' }
     const temp = Math.round(d.current.temperature_2m)
+    const wind = Math.round(d.current.windspeed_10m)
+    const tomorrowMax = Math.round(d.daily.temperature_2m_max[1])
+    const tomorrowMin = Math.round(d.daily.temperature_2m_min[1])
     const desc = {0:'selkeää',1:'pääosin selkeää',2:'puolipilvistä',3:'pilvistä',45:'sumuista',48:'sumuista',51:'tihkusadetta',53:'tihkusadetta',55:'tihkusadetta',61:'sadetta',63:'sadetta',65:'rankka sade',71:'lumisadetta',73:'lumisadetta',75:'rankka lumisade',80:'sadekuuroja',81:'sadekuuroja',82:'rankka sadekuuro',95:'ukkosmyrsky',96:'ukkosmyrsky',99:'ukkosmyrsky'}
-    return `${temp} astetta, ${desc[d.current.weathercode] || 'vaihtelevaa'}`
+    const windStr = wind >= 10 ? ', tuulista (' + wind + ' m/s)' : ''
+    const windWarn = wind >= 17 ? ' — KOVA TUULI' : ''
+    return {
+      today: `${temp} astetta, ${desc[d.current.weathercode] || 'vaihtelevaa'}${windStr}${windWarn}`,
+      tomorrow: `${tomorrowMin}-${tomorrowMax} astetta`
+    }
   }
   const helsinki = await fetchCity(60.17, 24.94)
   const tampere = await fetchCity(61.50, 23.77)
@@ -130,20 +138,18 @@ const generateDialogue = async () => {
 TÄRKEÄÄ: ÄLÄ aloita tervehdyksellä. Ensimmäinen lause on jo lisätty automaattisesti. Aloita SUORAAN säällä tai uutisella.
 
 Tänään on: ${now}
-Sää — Helsinki: ${weather.helsinki}, Tampere: ${weather.tampere}
-Uutiset (valitse yksi ja avaa se kuulijoille):
-${news.map((n, i) => `${i + 1}. ${n.title}${n.description ? ' — ' + n.description : ''}`).join('\n')}
-
+Sää tänään — Helsinki: ${weather.helsinki.today}, Tampere: ${weather.tampere.today}
+Huominen — Helsinki: ${weather.helsinki.tomorrow}, Tampere: ${weather.tampere.tomorrow}
 Säännöt:
-- Aloita mainitsemalla päivämäärä luontevasti
+- ÄLÄ mainitse päivämäärää tai viikonpäivää — tervehdys on jo lisätty automaattisesti
 - Kanavan nimi on Toneko Radio — ei taivutuksia, aina vain "Toneko Radio"
-- Kellonaika ja päivämäärä on jo valmiiksi oikein sanoin — KOPIOI ne sellaisenaan
+- Toisessa lauseessa kommentoi säätä luontevasti, esim. "Ulkona on tänään aika viileää — Helsingissä kuusi astetta ja Tampereella neljä." tai "Kevät etenee hitaasti, Helsingissä kuusi astetta ja pilvistä." — ei päivää eikä viikonpäivää
 - Muissa luvuissa kuten vuosiluvuissa: 2024 = "kaksituhattakaksikymmentäneljä"
-- Mainitse uutinen YHDELLÄ lauseella maksimissaan — ei enempää
-- ÄLÄ jatka uutisesta enemmän kuin yhden lauseen verran
+- Kerro säästä luontevasti ja kommentoi sitä — jos on tuulista tai kylmää, mainitse se
+- Jos tuuli on yli 10 m/s, mainitse että on tuulista. Jos yli 17 m/s, varoita kovasta tuulesta.
 - Luonnollinen, lämmin ja innostunut tyyli
 - Laura puhuu yksin, ei toista henkilöä
-- 5-7 erillistä lausumaa
+- 3 erillistä lausumaa maksimissaan
 - Älä mainitse artistien tai kappaleiden nimiä — sano vain "pistetään musiikkia soimaan"
 - Uutisissa saa mainita yritysten ja brändien nimiä normaalisti
 - Älä koskaan viittaa itseesi tai kanavaan muulla nimellä kuin Toneko Radio — ei Radio Suomipop, ei Yle, ei mikään muu
@@ -166,8 +172,8 @@ Vastaa AINOASTAAN validina JSON:na ilman mitään muuta tekstiä:
   dialogue.lines.unshift({ speaker: 'Laura', text: `Mukavaa ${weekdayPartitive}, täällä Laura ja Toneko Radio.` })
 
   console.log('\n--- JUONTO ---\n')
-  console.log(`Sää — Helsinki: ${weather.helsinki}, Tampere: ${weather.tampere}`)
-  console.log(`Uutiset tarjolla: ${news.map(n => n.title).join(' | ')}\n`)
+  console.log(`Sää — Helsinki: ${weather.helsinki.today}, Tampere: ${weather.tampere.today}`)
+
   dialogue.lines.forEach(line => {
     console.log(`${line.speaker}: ${line.text}`)
     console.log()
