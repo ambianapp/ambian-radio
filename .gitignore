@@ -1,0 +1,6 @@
+node_modules/
+.env
+*.mp3
+used_news.json
+fix*_patch.js
+getweather_patch.js
