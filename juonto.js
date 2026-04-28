@@ -133,7 +133,7 @@ const generateDialogue = async () => {
         role: 'user',
         content: `Olet kirjoittamassa noin 45 sekunnin radiomonologin suomalaiselle naispuoliselle juontajalle Lauralle. Hän juontaa Toneko Radio -kesäradiota yksin.
 
-TÄRKEÄÄ: Ensimmäinen lines-elementti on AINA täsmälleen: {"speaker": "Laura", "text": "Mukavaa ${now}ta, täällä Laura ja Toneko Radio."} — älä muuta tätä lainkaan.
+TÄRKEÄÄ: ÄLÄ aloita tervehdyksellä. Ensimmäinen lause on jo lisätty automaattisesti. Aloita SUORAAN säällä tai uutisella.
 
 Tänään on: ${now}
 Sää — Helsinki: ${weather.helsinki}, Tampere: ${weather.tampere}
