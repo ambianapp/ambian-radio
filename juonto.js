@@ -25,6 +25,7 @@ const getWeather = async () => {
   const fetchCity = async (lat, lon) => {
     const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode&timezone=Europe/Helsinki`)
     const d = await r.json()
+    if (!d.current) return 'ei saatavilla'
     const temp = Math.round(d.current.temperature_2m)
     const desc = {0:'selkeää',1:'pääosin selkeää',2:'puolipilvistä',3:'pilvistä',45:'sumuista',48:'sumuista',51:'tihkusadetta',53:'tihkusadetta',55:'tihkusadetta',61:'sadetta',63:'sadetta',65:'rankka sade',71:'lumisadetta',73:'lumisadetta',75:'rankka lumisade',80:'sadekuuroja',81:'sadekuuroja',82:'rankka sadekuuro',95:'ukkosmyrsky',96:'ukkosmyrsky',99:'ukkosmyrsky'}
     return `${temp} astetta, ${desc[d.current.weathercode] || 'vaihtelevaa'}`
