@@ -71,6 +71,15 @@ const generateDialogue = async () => {
   const nowDate = new Date()
   const toHki = (opts) => nowDate.toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki', ...opts })
   const weekday = toHki({ weekday: 'long' })
+  const weekdayPartitive = {
+    'maanantai': 'maanantaita',
+    'tiistai': 'tiistaita',
+    'keskiviikko': 'keskiviikkoa',
+    'torstai': 'torstaita',
+    'perjantai': 'perjantaita',
+    'lauantai': 'lauantaita',
+    'sunnuntai': 'sunnuntaita'
+  }[weekday] || weekday
   const monthNominative = toHki({ month: 'long' })
   const monthMap = {
     'tammikuu': 'tammikuuta', 'helmikuu': 'helmikuuta', 'maaliskuu': 'maaliskuuta',
@@ -158,6 +167,9 @@ Vastaa AINOASTAAN validina JSON:na ilman mitään muuta tekstiä:
   const data = await response.json()
   const raw = data.content[0].text.replace(/```json|```/g, '').trim()
   const dialogue = JSON.parse(raw)
+  
+  // Injektoi tervehdys ensimmäiseksi lauseeksi
+  dialogue.lines.unshift({ speaker: 'Laura', text: `Mukavaa ${weekdayPartitive}, täällä Laura ja Toneko Radio.` })
 
   console.log('\n--- JUONTO ---\n')
   console.log(`Sää — Helsinki: ${weather.helsinki}, Tampere: ${weather.tampere}`)
