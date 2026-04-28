@@ -5,7 +5,7 @@ const { execSync } = require('child_process')
 
 const PORT = process.env.PORT || 3000
 const FILE = '/app/juonto.mp3'
-const INTERVAL_MINUTES = 60
+const INTERVAL_MINUTES = 360
 
 let lastUpdated = null
 
